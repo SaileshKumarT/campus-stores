@@ -158,8 +158,9 @@ I used a staged review with AI agents, and kept every step in [docs/audit/](docs
 2. **Brainstorm.** Four agents, each with a different focus, proposed 53 ideas, each tied to evidence from the walkthrough: [01-ui.md](docs/audit/01-ui.md), [02-workflow.md](docs/audit/02-workflow.md), [03-real-life.md](docs/audit/03-real-life.md), [04-beginner.md](docs/audit/04-beginner.md).
 3. **Debate.** One agent argued FOR the ideas and grouped them into 22 groups; another argued AGAINST and listed what the app already does well. Each then answered the other in a rebuttal round: [05-debate-for.md](docs/audit/05-debate-for.md), [06-debate-against.md](docs/audit/06-debate-against.md).
 4. **Judge.** A judge ruled on all 53 ideas (3 accepted, 31 accepted with changes, 7 later, 12 rejected) and chose the headline: [07-verdict.md](docs/audit/07-verdict.md).
-5. **Coherence review.** A reviewer checked the plan for clashes, gaps and mistakes against the code.
-6. **Plan correction.** The review's fixes were folded back into the final plan: [docs/changes.md](docs/changes.md).
+5. **Coherence review.** A reviewer checked the plan for clashes, gaps and mistakes against the code: [08-review-report.md](docs/audit/08-review-report.md) (2 major, 13 minor issues, no blockers).
+6. **Plan correction.** All 15 fixes were folded back into the final plan: [docs/changes.md](docs/changes.md) (see section 10, Revision notes).
+7. **Build and check.** Five builders implemented the plan in parallel, and a scripted run of the whole shift (pickup, partial return, plan change, Saturday return, Undo, reload, Restart) checked that it all works together.
 
 The ground rules for every agent: the target user is a student with basic computer skills; keep the time control, sample data, Candidate brief and Restart; plain HTML/CSS/JS with no build step, working offline.
 

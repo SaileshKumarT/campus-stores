@@ -38,6 +38,8 @@ body > main {
   --mark: light-dark(#bd502f, #f2a585);
   --ok: light-dark(#e3f1e8, #2d4838);
   --oktxt: light-dark(#25523d, #bedac8);
+  --late: light-dark(#8a2c12, #ffd2c2);
+  --latebg: light-dark(#fbe3dc, #4a2a22);
   background: var(--paper);
   color: var(--ink);
   font:
@@ -154,6 +156,16 @@ body > main {
 #campus-stores .shift div {
   max-width: 67ch;
 }
+#campus-stores .shift .advance {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  max-width: 30ch;
+  text-align: right;
+}
+#campus-stores .shift .advance small {
+  color: var(--memotxt);
+}
 #campus-stores .shift b {
   font-size: 13px;
 }
@@ -179,6 +191,10 @@ body > main {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+}
+#campus-stores button,
+#campus-stores select {
+  min-height: 40px;
 }
 #campus-stores button:hover {
   border-color: var(--sel);
@@ -214,7 +230,7 @@ body > main {
   background: transparent;
   font-weight: 500;
 }
-#campus-stores nav button[aria-pressed="true"] {
+#campus-stores nav button[aria-current="page"] {
   background: var(--sel);
   color: var(--inv);
 }
@@ -247,6 +263,17 @@ body > main {
   gap: 8px;
   padding: 9px 0;
 }
+#campus-stores .row .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+}
+#campus-stores .row.late {
+  border-left: 4px solid var(--late);
+  padding-left: 8px;
+}
 #campus-stores .row small,
 #campus-stores label span {
   display: block;
@@ -254,7 +281,7 @@ body > main {
 #campus-stores .tag {
   background: var(--desk);
   color: var(--quiet);
-  font-size: 12px;
+  font-size: 13px;
   padding: 3px 7px;
   border-radius: 5px;
   display: inline-block;
@@ -262,6 +289,15 @@ body > main {
 #campus-stores .good {
   background: var(--ok);
   color: var(--oktxt);
+}
+#campus-stores .tag.late {
+  background: var(--latebg);
+  color: var(--late);
+  font-weight: 600;
+}
+#campus-stores .tag.soon {
+  background: var(--memo);
+  color: var(--memotxt);
 }
 #campus-stores .record {
   margin-top: 14px;
@@ -313,15 +349,74 @@ body > main {
   background: var(--desk);
   border-top: 1px solid var(--line);
   padding: 8px 16px;
-  color: var(--quiet);
-  font-size: 12px;
+  color: var(--ink);
+  font-size: 14px;
 }
 #campus-stores .statusbar span {
   flex: 1 1 160px;
 }
 #campus-stores .statusbar button {
-  font-size: 12px;
+  font-size: 13px;
   background: transparent;
+}
+/* Return / plans-changed panel (C01, C04) */
+#campus-stores .panel {
+  grid-column: 1 / -1;
+  background: var(--desk);
+  border-left: 3px solid var(--sel);
+  padding: 10px 12px;
+  display: grid;
+  gap: 8px;
+}
+#campus-stores .panel .buttons {
+  margin: 0;
+}
+#campus-stores .labelcheck {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+/* Message slot (C10) */
+#campus-stores .msg {
+  margin: 10px 0;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--desk);
+  border-left: 4px solid var(--sel);
+}
+#campus-stores .msg.ok {
+  background: var(--ok);
+  color: var(--oktxt);
+  border-color: var(--oktxt);
+}
+#campus-stores .msg.error {
+  background: var(--latebg);
+  color: var(--late);
+  border-color: var(--late);
+}
+#campus-stores .msg.warn {
+  background: var(--memo);
+  color: var(--memotxt);
+  border-color: var(--memotxt);
+}
+#campus-stores .linkbtn {
+  background: transparent;
+  border-color: transparent;
+  color: inherit;
+  text-decoration: underline;
+  padding: 2px 6px;
+}
+#campus-stores [aria-invalid="true"] {
+  border-color: var(--late);
+  box-shadow: 0 0 0 2px var(--latebg);
+}
+/* Programmatic focus targets (C13) */
+#campus-stores .msg:focus,
+#campus-stores h2:focus,
+#campus-stores h3:focus {
+  outline: 2px solid var(--mark);
+  outline-offset: 2px;
 }
 @container (max-width:650px) {
   #campus-stores .shell {
@@ -351,6 +446,10 @@ body > main {
   #campus-stores .shift {
     padding: 9px 12px;
   }
+  #campus-stores .shift .advance {
+    justify-items: start;
+    text-align: left;
+  }
 }
 @container (max-width:420px) {
   #campus-stores .form {
@@ -361,11 +460,28 @@ body > main {
   }
   #campus-stores .row {
     gap: 5px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #campus-stores .row .actions {
+    justify-content: flex-start;
+  }
+  #campus-stores .panel .buttons button {
+    flex: 1 1 100%;
   }
 }
 @media (pointer: coarse) {
   #campus-stores button,
-  #campus-stores select {
+  #campus-stores select,
+  #campus-stores textarea {
     min-height: 44px;
   }
+}
+/* After the coarse-pointer rule so the textarea keeps its taller minimum (C14) */
+#campus-stores textarea {
+  min-height: 72px;
+}
+
+#campus-stores .empty {
+  color: var(--quiet);
+  padding: 12px 0;
 }
